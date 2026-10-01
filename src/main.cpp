@@ -9,7 +9,7 @@ Adafruit_SHT31 shtx = Adafruit_SHT31();
 
 void setup()
 {
-    Serial.begin(9200);
+    Serial.begin(9600);
 
     Wire.begin(SDA_PIN, SCL_PIN);
 
@@ -22,6 +22,8 @@ void setup()
         }
     }
 
+    shtx.reset();
+
     Serial.println("SHT3x sensor initialized.");
 }
 
@@ -30,18 +32,11 @@ void loop()
     float temperature = shtx.readTemperature();
     float humidity = shtx.readHumidity();
 
-    if (isnan(temperature) || isnan(humidity))
-    {
-        Serial.println("Failed to read SHT3x sensor.");
-    }
-    else
-    {
-        Serial.printf(
-            "Temperature: %.2f °C | Humidity: %.2f %%\n",
-            temperature,
-            humidity
-        );
-    }
+    Serial.print("Temperature: ");
+    Serial.print(temperature);
+    Serial.print(" °C | Humidity: ");
+    Serial.print(humidity);
+    Serial.println(" %");
 
     delay(5000);
 }
